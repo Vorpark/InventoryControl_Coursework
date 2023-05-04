@@ -21,7 +21,7 @@ namespace InventoryControl_Coursework
 
             //При удачной проверке идет запись
             string path = "db.txt";
-            string text = $"Стеллаж:{shelving.Number} Номер ячейки:{shelvingUnit.Number} Материал:{material.Name} Количество:{material.Count}";
+            string text = $"{shelving.Number} {shelvingUnit.Number} {material.Name} {material.Count}"; //$"Стеллаж:{shelving.Number} Номер ячейки:{shelvingUnit.Number} Материал:{material.Name} Количество:{material.Count}";
             using (StreamWriter writer = new StreamWriter(path, true))
             {
                 writer.WriteLineAsync(text);

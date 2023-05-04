@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace InventoryControl_Coursework
 {
@@ -27,14 +28,15 @@ namespace InventoryControl_Coursework
 
         private void button4_Click(object sender, EventArgs e)
         {
+            dataGridView1.Rows.Clear();
             string path = "db.txt";
             using (StreamReader reader = new StreamReader(path))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-
-                    dataGridView1.Rows.Add("a", 1, 1, 2);
+                    string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    dataGridView1.Rows.Add(words[0], words[1], words[2], words[3]);
                 }
             }
         }
