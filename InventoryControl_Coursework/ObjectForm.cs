@@ -26,7 +26,7 @@ namespace InventoryControl_Coursework
             button1.Text = "Изменить";
             oldObject = $"{words[0]} {words[1]} {words[2]} {words[3]}";
         }
-        private void AddNewObject(object sender, EventArgs e)
+        private void AddOrEditObject(object sender, EventArgs e)
         {
             bool check = true;
 

@@ -4,15 +4,15 @@ using System.Windows.Forms;
 
 namespace InventoryControl_Coursework
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             UpdateData();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void AddNewObject(object sender, EventArgs e)
         {
             var addForm = new ObjectForm();
             addForm.ShowDialog();
@@ -37,7 +37,7 @@ namespace InventoryControl_Coursework
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void EditObject(object sender, EventArgs e)
         {
             string[] words = { dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString(), dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString(), dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString(), dataGridView1[3, dataGridView1.CurrentRow.Index].Value.ToString() };
             var addForm = new ObjectForm(words);
@@ -45,7 +45,7 @@ namespace InventoryControl_Coursework
             UpdateData();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void DeleteObject(object sender, EventArgs e)
         {
             string text;
             string oldObject = $"{dataGridView1[0, dataGridView1.CurrentRow.Index].Value} {dataGridView1[1, dataGridView1.CurrentRow.Index].Value} {dataGridView1[2, dataGridView1.CurrentRow.Index].Value} {dataGridView1[3, dataGridView1.CurrentRow.Index].Value}";
@@ -63,7 +63,7 @@ namespace InventoryControl_Coursework
             UpdateData();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void FindMaterial(object sender, EventArgs e)
         {
             bool find = false;
             dataGridView1.Rows.Clear();
@@ -90,7 +90,7 @@ namespace InventoryControl_Coursework
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void FindShelvingAndUnit(object sender, EventArgs e)
         {
             bool find = false;
             dataGridView1.Rows.Clear();
@@ -117,7 +117,7 @@ namespace InventoryControl_Coursework
             }
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void RemoveFilter(object sender, EventArgs e)
         {
             UpdateData();
         }
