@@ -62,5 +62,64 @@ namespace InventoryControl_Coursework
             }
             UpdateData();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            bool find = false;
+            dataGridView1.Rows.Clear();
+            string path = "db.txt";
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (words.Length > 0)
+                    {
+                        if (words[2] == textBox1.Text || words[2].ToLower() == textBox1.Text)
+                        {
+                            dataGridView1.Rows.Add(words[0], words[1], words[2], words[3]);
+                            find = true;
+                        }
+                    }
+                }
+                if (!find)
+                {
+                    MessageBox.Show("Ничего не найдено!", "Ошибка!", MessageBoxButtons.OK);
+                }
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            bool find = false;
+            dataGridView1.Rows.Clear();
+            string path = "db.txt";
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (words.Length > 0)
+                    {
+                        if (words[0] == textBox2.Text && words[1] == textBox3.Text)
+                        {
+                            dataGridView1.Rows.Add(words[0], words[1], words[2], words[3]);
+                            find = true;
+                        }
+                    }
+                }
+                if (!find)
+                {
+                    MessageBox.Show("Ничего не найдено!", "Ошибка!", MessageBoxButtons.OK);
+                }
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            UpdateData();
+        }
     }
 }

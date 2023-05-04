@@ -8,6 +8,8 @@ namespace InventoryControl_Coursework
     {
         bool editing = false;
         string oldObject;
+        string oldShelving;
+        string oldShelvingUnit;
         public ObjectForm()
         {
             InitializeComponent();
@@ -16,7 +18,9 @@ namespace InventoryControl_Coursework
         {
             editing = true;
             textBox3.Text = words[0];
+            oldShelving = words[0];
             textBox4.Text = words[1];
+            oldShelvingUnit = words[1];
             textBox1.Text = words[2];
             textBox2.Text = words[3];
             button1.Text = "Изменить";
@@ -47,13 +51,35 @@ namespace InventoryControl_Coursework
                 check = false;
             }
 
-
-
             if (check)
             {
                 if (editing)
                 {
-                    Edit(oldObject);
+                    string path = "db.txt";
+                    using (StreamReader reader = new StreamReader(path))
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (line.Length > 0)
+                            {
+                                string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                if (words[0] == textBox3.Text && words[1] == textBox4.Text)
+                                {
+                                    if (oldShelving != textBox3.Text || oldShelvingUnit != textBox4.Text)
+                                    {
+                                        MessageBox.Show("Данная ячейка стеллажа уже занята!", "Ошибка!", MessageBoxButtons.OK);
+                                        check = false;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (check)
+                    {
+                        Edit(oldObject);
+                    }
                 }
                 else
                 {
@@ -110,6 +136,21 @@ namespace InventoryControl_Coursework
             {
                 writer.WriteLineAsync(text);
             }
+            ClearEmptyLines();
+        }
+        private void ClearEmptyLines()
+        {
+            int i;
+            string[] mass = File.ReadAllLines("db.txt");
+            StreamWriter NewFile = File.CreateText("db.txt");
+            for (i = 0; i < mass.Length; i++)
+            {
+                if (mass[i] != "")
+                {
+                    NewFile.WriteLine(mass[i]);
+                }
+            }
+            NewFile.Close();
         }
     }
 }
