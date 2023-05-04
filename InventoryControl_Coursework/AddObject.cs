@@ -13,18 +13,60 @@ namespace InventoryControl_Coursework
 
         private void AddNewObject(object sender, EventArgs e)
         {
-            Material material = new Material() { Name = textBox1.Text, Count = Convert.ToInt32(textBox2.Text) }; // Проверка count
-            Shelving shelving = new Shelving() { Number = Convert.ToInt32(textBox3.Text) }; // Проверка на уникальность стеллажа и number
-            ShelvingUnit shelvingUnit = new ShelvingUnit() { Number = Convert.ToInt32(textBox4.Text) }; // Проверка на number
-            shelvingUnit.Material = material;
-            shelving.ShelvingUnits.Add(shelvingUnit); //Проверка на уникальность ячейки и занятость
+            bool check = true;
 
-            //При удачной проверке идет запись
-            string path = "db.txt";
-            string text = $"{shelving.Number} {shelvingUnit.Number} {material.Name} {material.Count}"; //$"Стеллаж:{shelving.Number} Номер ячейки:{shelvingUnit.Number} Материал:{material.Name} Количество:{material.Count}";
-            using (StreamWriter writer = new StreamWriter(path, true))
+            if (textBox1.Text == "")
             {
-                writer.WriteLineAsync(text);
+                MessageBox.Show("Поле название материала не может быть пустым!", "Ошибка!", MessageBoxButtons.OK);
+                check = false;
+            }
+            if (int.TryParse(textBox2.Text, out int count) && textBox2.Text == "")
+            {
+                MessageBox.Show("Поле количество материала введено неверно!", "Ошибка!", MessageBoxButtons.OK);
+                check = false;
+            }
+            if (int.TryParse(textBox3.Text, out int numberShelving) && textBox3.Text == "")
+            {
+                MessageBox.Show("Поле номер стеллажа введено неверно!", "Ошибка!", MessageBoxButtons.OK);
+                check = false;
+            }
+            if (int.TryParse(textBox4.Text, out int numberShelvingUnit) && textBox4.Text == "")
+            {
+                MessageBox.Show("Поле номер ячейки введено неверно!", "Ошибка!", MessageBoxButtons.OK);
+                check = false;
+            }
+            
+            if (check)
+            {
+                string path = "db.txt";
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (words[0] == textBox3.Text && words[1] == textBox4.Text)
+                        {
+                            MessageBox.Show("Данная ячейка стеллажа уже занята!", "Ошибка!", MessageBoxButtons.OK);
+                            check = false;
+                            break;
+                        }
+                    }
+                }
+                if (check)
+                {
+                    Material material = new Material() { Name = textBox1.Text, Count = count };
+                    Shelving shelving = new Shelving() { Number = numberShelving }; // Проверка на уникальность стеллажа
+                    ShelvingUnit shelvingUnit = new ShelvingUnit() { Number = numberShelvingUnit };
+                    shelvingUnit.Material = material;
+                    shelving.ShelvingUnits.Add(shelvingUnit); //Проверка на уникальность ячейки и занятость
+
+                    string text = $"{shelving.Number} {shelvingUnit.Number} {material.Name} {material.Count}";
+                    using (StreamWriter writer = new StreamWriter(path, true))
+                    {
+                        writer.WriteLineAsync(text);
+                    }
+                }
             }
         }
     }
