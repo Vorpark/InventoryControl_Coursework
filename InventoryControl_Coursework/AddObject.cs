@@ -20,17 +20,17 @@ namespace InventoryControl_Coursework
                 MessageBox.Show("Поле название материала не может быть пустым!", "Ошибка!", MessageBoxButtons.OK);
                 check = false;
             }
-            if (int.TryParse(textBox2.Text, out int count) && textBox2.Text == "")
+            if (!int.TryParse(textBox2.Text, out int count) && textBox2.Text == "")
             {
                 MessageBox.Show("Поле количество материала введено неверно!", "Ошибка!", MessageBoxButtons.OK);
                 check = false;
             }
-            if (int.TryParse(textBox3.Text, out int numberShelving) && textBox3.Text == "")
+            if (!int.TryParse(textBox3.Text, out int numberShelving) && textBox3.Text == "")
             {
                 MessageBox.Show("Поле номер стеллажа введено неверно!", "Ошибка!", MessageBoxButtons.OK);
                 check = false;
             }
-            if (int.TryParse(textBox4.Text, out int numberShelvingUnit) && textBox4.Text == "")
+            if (!int.TryParse(textBox4.Text, out int numberShelvingUnit) && textBox4.Text == "")
             {
                 MessageBox.Show("Поле номер ячейки введено неверно!", "Ошибка!", MessageBoxButtons.OK);
                 check = false;
@@ -56,10 +56,10 @@ namespace InventoryControl_Coursework
                 if (check)
                 {
                     Material material = new Material() { Name = textBox1.Text, Count = count };
-                    Shelving shelving = new Shelving() { Number = numberShelving }; // Проверка на уникальность стеллажа
+                    Shelving shelving = new Shelving() { Number = numberShelving }; 
                     ShelvingUnit shelvingUnit = new ShelvingUnit() { Number = numberShelvingUnit };
                     shelvingUnit.Material = material;
-                    shelving.ShelvingUnits.Add(shelvingUnit); //Проверка на уникальность ячейки и занятость
+                    shelving.ShelvingUnits.Add(shelvingUnit);
 
                     string text = $"{shelving.Number} {shelvingUnit.Number} {material.Name} {material.Count}";
                     using (StreamWriter writer = new StreamWriter(path, true))
