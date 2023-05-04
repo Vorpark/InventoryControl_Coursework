@@ -47,24 +47,7 @@ namespace InventoryControl_Coursework
                 check = false;
             }
 
-            string path = "db.txt";
-            using (StreamReader reader = new StreamReader(path))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if (line.Length > 0)
-                    {
-                        string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                        if (words[0] == textBox3.Text && words[1] == textBox4.Text)
-                        {
-                            MessageBox.Show("Данная ячейка стеллажа уже занята!", "Ошибка!", MessageBoxButtons.OK);
-                            check = false;
-                            break;
-                        }
-                    }
-                }
-            }
+
 
             if (check)
             {
@@ -74,10 +57,33 @@ namespace InventoryControl_Coursework
                 }
                 else
                 {
+                    string path = "db.txt";
+                    using (StreamReader reader = new StreamReader(path))
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (line.Length > 0)
+                            {
+                                string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                                if (words[0] == textBox3.Text && words[1] == textBox4.Text)
+                                {
+                                    MessageBox.Show("Данная ячейка стеллажа уже занята!", "Ошибка!", MessageBoxButtons.OK);
+                                    check = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (check)
+                    {
                         Material material = new Material() { Name = textBox1.Text, Count = count };
                         Shelving shelving = new Shelving() { Number = numberShelving };
-                        ShelvingUnit shelvingUnit = new ShelvingUnit() { Number = numberShelvingUnit };
-                        shelvingUnit.Material = material;
+                        ShelvingUnit shelvingUnit = new ShelvingUnit
+                        {
+                            Number = numberShelvingUnit,
+                            Material = material
+                        };
                         shelving.ShelvingUnit = shelvingUnit;
 
                         string text = $"{shelving.Number} {shelving.ShelvingUnit.Number} {material.Name} {material.Count}";
@@ -85,7 +91,9 @@ namespace InventoryControl_Coursework
                         {
                             writer.WriteLineAsync(text);
                         }
+                    }
                 }
+                Close();
             }
         }
         private void Edit(string oldObject)

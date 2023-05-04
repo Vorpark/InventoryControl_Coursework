@@ -9,16 +9,13 @@ namespace InventoryControl_Coursework
         public Form1()
         {
             InitializeComponent();
+            UpdateData();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             var addForm = new ObjectForm();
             addForm.ShowDialog();
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
             UpdateData();
         }
         
@@ -45,6 +42,7 @@ namespace InventoryControl_Coursework
             string[] words = { dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString(), dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString(), dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString(), dataGridView1[3, dataGridView1.CurrentRow.Index].Value.ToString() };
             var addForm = new ObjectForm(words);
             addForm.ShowDialog();
+            UpdateData();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -62,6 +60,7 @@ namespace InventoryControl_Coursework
             {
                 writer.WriteLineAsync(text);
             }
+            UpdateData();
         }
     }
 }

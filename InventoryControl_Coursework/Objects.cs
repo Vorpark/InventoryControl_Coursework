@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace InventoryControl_Coursework
+﻿namespace InventoryControl_Coursework
 {
     public class Shelving // Стеллаж
     {
