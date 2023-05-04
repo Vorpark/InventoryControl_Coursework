@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace InventoryControl_Coursework
 {
@@ -22,11 +13,16 @@ namespace InventoryControl_Coursework
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var addForm = new AddObject();
+            var addForm = new ObjectForm();
             addForm.ShowDialog();
         }
 
         private void button4_Click(object sender, EventArgs e)
+        {
+            UpdateData();
+        }
+        
+        private void UpdateData()
         {
             dataGridView1.Rows.Clear();
             string path = "db.txt";
@@ -36,8 +32,35 @@ namespace InventoryControl_Coursework
                 while ((line = reader.ReadLine()) != null)
                 {
                     string[] words = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    dataGridView1.Rows.Add(words[0], words[1], words[2], words[3]);
+                    if (words.Length > 0)
+                    {
+                        dataGridView1.Rows.Add(words[0], words[1], words[2], words[3]);
+                    }
                 }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string[] words = { dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString(), dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString(), dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString(), dataGridView1[3, dataGridView1.CurrentRow.Index].Value.ToString() };
+            var addForm = new ObjectForm(words);
+            addForm.ShowDialog();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string text;
+            string oldObject = $"{dataGridView1[0, dataGridView1.CurrentRow.Index].Value} {dataGridView1[1, dataGridView1.CurrentRow.Index].Value} {dataGridView1[2, dataGridView1.CurrentRow.Index].Value} {dataGridView1[3, dataGridView1.CurrentRow.Index].Value}";
+            string path = "db.txt";
+            string newObject = "";
+            using (StreamReader reader = new StreamReader(path))
+            {
+                text = reader.ReadToEnd();
+            }
+            text = text.Replace(oldObject, newObject);
+            using (StreamWriter writer = new StreamWriter(path, false))
+            {
+                writer.WriteLineAsync(text);
             }
         }
     }

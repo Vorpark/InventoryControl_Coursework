@@ -1,6 +1,6 @@
 ﻿namespace InventoryControl_Coursework
 {
-    partial class AddObject
+    partial class ObjectForm
     {
         /// <summary>
         /// Required designer variable.
@@ -105,7 +105,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(348, 205);
+            this.button1.Location = new System.Drawing.Point(167, 122);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(124, 57);
             this.button1.TabIndex = 8;
@@ -113,11 +113,11 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.AddNewObject);
             // 
-            // AddObject
+            // ObjectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 274);
+            this.ClientSize = new System.Drawing.Size(303, 188);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.label4);
@@ -127,8 +127,10 @@
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
-            this.Name = "AddObject";
-            this.Text = "AddNewObject";
+            this.MaximumSize = new System.Drawing.Size(319, 227);
+            this.MinimumSize = new System.Drawing.Size(319, 227);
+            this.Name = "ObjectForm";
+            this.Text = "ObjectForm";
             this.ResumeLayout(false);
             this.PerformLayout();
 
